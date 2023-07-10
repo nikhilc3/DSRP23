@@ -1,0 +1,13 @@
+### Bold
+
+To make a plot, we use ggplot() function
+
+##### header 5
+
+```{r}
+# this is a comment
+library(ggplot2)
+
+ggplot(data = mpg, aes(x = hwy)) +
+  geom_density()
+```
