@@ -1,0 +1,65 @@
+```{r}
+getwd()
+data <- read.csv("vgsales.csv")
+View(data)
+
+library(dplyr)
+```
+
+```{r}
+## 1 (filtering the observations of your dataset based on one or more variable using filter())
+filter(data, Platform == "DS")
+
+```
+
+```{r}
+
+## 2 ( create a smaller dataset with a subset of variables using select())
+names(data)
+
+smaller_data <- select(data, Name, Platform, Year, Genre, Global_Sales, EU_Sales)
+smaller_data
+
+
+
+```
+
+```{r}
+## 3 (Add 2 new columns to your dataset using mutate())
+
+data <- data %>%
+  group_by(Genre) %>%
+  mutate(GlobalSalesAVG = mean(Global_Sales, na.rm = TRUE))
+
+mutate(data,
+  total_sales = NA_Sales + EU_Sales + JP_Sales + Other_Sales)
+```
+
+```{r}
+
+## 4 (Create a data table of grouped summaries on at least one numeric variable by at least one categorical variable using summarize())
+
+summary_data <- data %>%
+  group_by(Genre) %>%
+  summarise(Avg_Global_Sales = mean(Global_Sales, na.rm = TRUE))
+
+summary_data
+```
+
+```{r}
+
+##  5 (Reorder a data table of your choice by one or more variables using arrange())
+data <- arrange(data, desc(Global_Sales))
+data
+
+
+```
+
+```{r}
+## 6 (Create at least one new visualization using some form of an updated dataset)
+library(ggplot2)
+ggplot(summary_data, aes(x = Genre, y = Avg_Global_Sales)) +
+  geom_bar(stat = "Identity", fill = "blue") +
+  labs(x = "Genre", y = "Average Global Sales", 
+       title = "Average Global Sales by Genre")
+```
